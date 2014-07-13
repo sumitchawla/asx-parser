@@ -1,0 +1,30 @@
+{
+  "name": "asx-parser",
+  "author": "Sumit Chawla",
+  "version": "0.0.1",
+  "description": "A simple utility to parse ASX (Advanced Stream Redirector) files",
+  "keywords": [
+    "asx",
+    "asx parser"
+  ],
+  "homepage": "https://github.com/sumitchawla/asx-parser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sumitchawla/asx-parser.git"
+  },
+  "dependencies": {
+    "node-expat": "~2.3",
+    "bluebird": "~2.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.20"
+  },
+  "main": "asx-parser",
+  "bugs": {
+    "url": "https://github.com/sumitchawla/asx-parser/issues"
+  },
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "license": "MIT"
+}
