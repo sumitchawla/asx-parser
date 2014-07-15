@@ -17,7 +17,9 @@
     "bluebird": "~2.2"
   },
   "devDependencies": {
-    "mocha": "~1.20"
+    "mocha": "~1.20",
+    "chai" : "~1.9"
+
   },
   "main": "asx-parser",
   "bugs": {

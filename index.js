@@ -1,7 +1,6 @@
 'use strict';
 var Promise = require("bluebird");
 var expat = require('node-expat');
-var parser = new expat.Parser('UTF-8');
 var fs = Promise.promisifyAll(require("fs"));
 
 var AsxParser = function() {
@@ -15,13 +14,15 @@ var AsxParser = function() {
 
         this.parseFile = function(file){
 
-          return fs.readFileAsync(file)
+          var resolver = Promise.pending();
+
+          fs.readFileAsync(file)
             .then(function(data){
-            
             var entries = [];
             var currentEntry = null;
             var currentProp = null;        
                     
+            var parser = new expat.Parser('UTF-8');
             parser.on('startElement', function (name, attrs) {
               //console.log("start", name, attrs)
               name = name.toLowerCase();
@@ -95,12 +96,12 @@ var AsxParser = function() {
             });
                   
             if (!parser.parse(data)) {
-              throw new Error('There are errors in your xml file: ' + parser.getError());
+              resolver.reject(new Error('There are errors in your xml file: ' + parser.getError()));
             }
-                  
-            //console.log(entries);
-            return entries;
+             resolver.resolve(entries);
           });
+
+          return resolver.promise;;
         }
 };
 
