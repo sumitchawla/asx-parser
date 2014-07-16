@@ -8,16 +8,12 @@ var AsxParser = function() {
           return (text || '').replace(/(^\s*|\s*$)/g, function(match, group) { return ''; })
         }
 
-       var toUpper = function(text) {
+        var toUpper = function(text) {
           return (text || '').replace(/^([a-z]?)/,function(c) { return c.toUpperCase(); });
         }
 
-        this.parseFile = function(file){
-
-          var resolver = Promise.pending();
-
-          fs.readFileAsync(file)
-            .then(function(data){
+        var parseAsxContent = function(data) {
+          return new Promise(function (resolve, reject) {
             var entries = [];
             var currentEntry = null;
             var currentProp = null;        
@@ -61,7 +57,7 @@ var AsxParser = function() {
               name = name.toLowerCase();
               if (currentProp && (name != currentProp)) {
                 console.log('unmatched', name, currentProp);
-                throw new Error('Unmatched End tag.' + name);
+                return reject(new Error('Unmatched End tag.' + name));
               }
               switch(name) {
                 case 'entry': 
@@ -92,16 +88,25 @@ var AsxParser = function() {
             })
 
             parser.on('error', function (error) {
-              console.error(error)
+              reject(error)
             });
                   
             if (!parser.parse(data)) {
-              resolver.reject(new Error('There are errors in your xml file: ' + parser.getError()));
+              reject(new Error('There are errors in your xml file: ' + parser.getError()));
             }
-             resolver.resolve(entries);
+            resolve(entries);
           });
+        }
 
-          return resolver.promise;;
+
+        this.parseString = function(data) {
+          return parseAsxContent(data);
+        } 
+
+        this.parseFile = function(file){
+          return fs.readFileAsync(file)
+            .then(parseAsxContent);
+
         }
 };
 
