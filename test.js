@@ -5,6 +5,7 @@ describe("Tests", function() {
 
     it('Test Example file', function(done){
       parser.parseFile("sample/example.asx").done(function(ret) {
+        console.log(ret);
         assert(ret);
         assert.isArray(ret);
         assert.equal(ret.length, 2);
