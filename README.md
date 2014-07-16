@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/sumitchawla/asx-parser.svg?branch=master)](https://travis-ci.org/sumitchawla/asx-parser)
+[![Dependency Status](https://david-dm.org/sumitchawla/asx-parser.png)](https://david-dm.org/sumitchawla/asx-parser) 
+[![devDependency Status](https://david-dm.org/sumitchawla/asx-parser/dev-status.png)](https://david-dm.org/sumitchawla/asx-parser#info=devDependencies)
+
 
 # ASX Parser
 
